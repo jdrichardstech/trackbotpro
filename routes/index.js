@@ -55,11 +55,11 @@ router.post('/trackbot', function(req, res, next){
 			}
 			break;
 		case 'help':
-		case '':
 			var botPayload = {
 			"response_type": 'ephemeral',
 			"text": "Hi *" + editedUserName + "*! What would you like to do? \n\nType:\n `/trackbot add` to add a new exercise or \n`/trackbot view` to view your exercises or \n`/trackbot leaderboard` to view who is in the lead this week."
 			}
+			break;
 		case 'add':
 			var botPayload = {
 				"response_type": 'ephemeral',
@@ -191,9 +191,14 @@ router.post('/trackbot', function(req, res, next){
 				"response_type": 'ephemeral',
 				"text": "Hi *" + editedUserName + "*! Here is the leaderboard"
 				}
-
 				break;
-			}
+			default:
+				var botPayload = {
+				"response_type": 'ephemeral',
+				"text": "Hi *" + editedUserName + "*! What would you like to do? \n\nType:\n `/trackbot add` to add a new exercise or \n`/trackbot view` to view your exercises or \n`/trackbot leaderboard` to view who is in the lead this week."
+				}
+				break;
+				}
 	sendMessageToSlackResponseURL(responseURL, botPayload)
 })
 
