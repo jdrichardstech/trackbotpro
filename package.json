@@ -1,0 +1,21 @@
+{
+  "name": "trackbotpro",
+  "version": "1.0.0",
+  "description": "Slack Trackbot for Running or Walking",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "JD Richards and Dave Fenest",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.1",
+    "nodemon": "^1.11.0",
+    "request": "^2.81.0"
+  }
+}
