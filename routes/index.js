@@ -46,141 +46,154 @@ router.post('/trackbot', function(req, res, next){
 	var responseURL = reqBody.response_url
 	var userName = req.body.user_name
 	let editedUserName = userName.charAt(0).toUpperCase()+userName.substr(1)
-	if(req.body.text == 'add'){
-		var botPayload = {
-			"response_type": 'ephemeral',
-			"text": "Hi *" + editedUserName + "*!",
-			"attachments": [
-				 {
-					 "text":"Choose your Exercise Type:",
-					 "mrkdwn": true,
-					 "fallback": "You are unable to choose an exercise",
-					 "callback_id": "exerciseType",
-					 "color": "#3AA3E3",
-					 "attachment_type": "default",
-					 "actions": [
-						 {
-							 "name": "run",
-							 "text": "Run",
-							 "type": "button",
-							 "value": "run"
-						 },
-						 {
-							 "name": "walk",
-							 "text": "Walk",
-							 "type": "button",
-							 "value": "walk"
-						 },
-						 {
-							 "name": "bike",
-							 "text": "Bike",
-							 "type": "button",
-							 "value": "bike"
-						 }
-					 ]
-				 },
-				 {
-					 "text":"What was your distance?:",
-					 "mrkdwn": true,
-					 "fallback": "You are unable to choose an distance",
-					 "callback_id": "exerciseDistance",
-					 "color": "#ff3333",
-					 "attachment_type": "default",
-					 "actions":[
-						 {
-						 	"name": 'distanceNumber',
-		          "text": 'Distance',
-		          "type": 'select',
-		          "value": 'distanceNumber',
-		          "style": 'primary',
-		          "options": helpers.loopDistanceInputNumbers(50)
-						 },
-						 {
-						 	"name": 'distanceFormat',
-		          "text": 'Miles or Kilometers',
-		          "type": 'select',
-		          "value": 'distanceFormat',
-		          "style": 'primary',
-		          "options": [
-				        {
-			            "text": "mile(s)",
-			            "value": "miles"
-				        },
-				        {
-			            "text": "kilometer(s)",
-			            "value": "kilometers"
-				        }
-					    ]
-						 }
-					 ]
-				 },
-				 {
-					 "text":"How long was your exercise?",
-					 "mrkdwn": true,
-					 "fallback": "You are unable to choose an time",
-					 "callback_id": "exerciseTime",
-					 "color": "#00cc44",
-					 "attachment_type": "default",
-					 "actions":[
-						 {
-							"name": 'hour',
-							"text": 'Hours',
-							"type": 'select',
-							"value": 'hour',
-							"style": 'primary',
-							"options": helpers.loopInputNumbers(20)
-			 			 	},
-						 	{
-								"name": 'minutes',
-								"text": 'Minutes',
-								"type": 'select',
-								"value": 'minutes',
-								"style": 'primary',
-								"options": helpers.loopInputNumbers(59)
-					 		}
-		 				]
-					},
-					{
-					 "text":"Would you like to log your exercise now?",
-					 "mrkdwn": true,
-					 "fallback": "Not done",
-					 "callback_id": "completeExercise",
-					 "color": "#fff",
-					 "attachment_type": "default",
-					 "actions": [
-						 {
-							 "name": "submit",
-							 "text": "Submit",
-							 "type": "button",
-							 "value": "submit",
-							 "confirm": {
-						 		 "title": "Are you sure?",
-						 		 "text": "Think about it.",
-						 		 "ok_text": "Yes",
-						 		 "dismiss_text": "No"
-				  			}
-						 },
-						 {
-							 "name": "cancel",
-							 "text": "Cancel",
-							 "type": "button",
-							 "value": "cancel"
-						 }
-				 		]
-			 		}
-		 		]
-			}
-		}else if(req.body.text == 'view'){
+
+	switch(req.body.text){
+		case 'view':
 			var botPayload = {
 				"response_type": 'ephemeral',
 				"text": "*"+editedUserName +"\'s Log*\n\n*Date*\t*ExerciseType*\t*Distance*\t*Time*"
 			}
-		}else if (req.body.text=='' || req.body.text=='help'){
+			break;
+		case 'help':
+		case '':
 			var botPayload = {
 			"response_type": 'ephemeral',
 			"text": "Hi *" + editedUserName + "*! What would you like to do? \n\nType:\n `/trackbot add` to add a new exercise or \n`/trackbot view` to view your exercises or \n`/trackbot leaderboard` to view who is in the lead this week."
-		}
-	}
+			}
+		case 'add':
+			var botPayload = {
+				"response_type": 'ephemeral',
+				"text": "Hi *" + editedUserName + "*!",
+				"attachments": [
+					 {
+						 "text":"Choose your Exercise Type:",
+						 "mrkdwn": true,
+						 "fallback": "You are unable to choose an exercise",
+						 "callback_id": "exerciseType",
+						 "color": "#3AA3E3",
+						 "attachment_type": "default",
+						 "actions": [
+							 {
+								 "name": "run",
+								 "text": "Run",
+								 "type": "button",
+								 "value": "run"
+							 },
+							 {
+								 "name": "walk",
+								 "text": "Walk",
+								 "type": "button",
+								 "value": "walk"
+							 },
+							 {
+								 "name": "bike",
+								 "text": "Bike",
+								 "type": "button",
+								 "value": "bike"
+							 }
+						 ]
+					 },
+					 {
+						 "text":"What was your distance?:",
+						 "mrkdwn": true,
+						 "fallback": "You are unable to choose an distance",
+						 "callback_id": "exerciseDistance",
+						 "color": "#ff3333",
+						 "attachment_type": "default",
+						 "actions":[
+							 {
+								"name": 'distanceNumber',
+								"text": 'Distance',
+								"type": 'select',
+								"value": 'distanceNumber',
+								"style": 'primary',
+								"options": helpers.loopDistanceInputNumbers(50)
+							 },
+							 {
+								"name": 'distanceFormat',
+								"text": 'Miles or Kilometers',
+								"type": 'select',
+								"value": 'distanceFormat',
+								"style": 'primary',
+								"options": [
+									{
+										"text": "mile(s)",
+										"value": "miles"
+									},
+									{
+										"text": "kilometer(s)",
+										"value": "kilometers"
+									}
+								]
+							 }
+						 ]
+					 },
+					 {
+						 "text":"How long was your exercise?",
+						 "mrkdwn": true,
+						 "fallback": "You are unable to choose an time",
+						 "callback_id": "exerciseTime",
+						 "color": "#00cc44",
+						 "attachment_type": "default",
+						 "actions":[
+							 {
+								"name": 'hour',
+								"text": 'Hours',
+								"type": 'select',
+								"value": 'hour',
+								"style": 'primary',
+								"options": helpers.loopInputNumbers(20)
+								},
+								{
+									"name": 'minutes',
+									"text": 'Minutes',
+									"type": 'select',
+									"value": 'minutes',
+									"style": 'primary',
+									"options": helpers.loopInputNumbers(59)
+								}
+							]
+						},
+						{
+						 "text":"Would you like to log your exercise now?",
+						 "mrkdwn": true,
+						 "fallback": "Not done",
+						 "callback_id": "completeExercise",
+						 "color": "#fff",
+						 "attachment_type": "default",
+						 "actions": [
+							 {
+								 "name": "submit",
+								 "text": "Submit",
+								 "type": "button",
+								 "value": "submit",
+								 "confirm": {
+									 "title": "Are you sure?",
+									 "text": "Think about it.",
+									 "ok_text": "Yes",
+									 "dismiss_text": "No"
+									}
+							 },
+							 {
+								 "name": "cancel",
+								 "text": "Cancel",
+								 "type": "button",
+								 "value": "cancel"
+							 }
+							]
+						}
+					]
+				}
+
+				break;
+			case 'leaderboard':
+				var botPayload = {
+				"response_type": 'ephemeral',
+				"text": "Hi *" + editedUserName + "*! Here is the leaderboard"
+				}
+
+				break;
+			}
 	sendMessageToSlackResponseURL(responseURL, botPayload)
 })
 
