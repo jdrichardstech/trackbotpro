@@ -1,5 +1,4 @@
 
-
 //creates array of objects for inputs in attachments
 function loopInputNumbers(num){
   let inputObjectsArray = []
@@ -23,6 +22,7 @@ function loopMinutes(num){
       	optionsObject = {"text" : ":"+i.toString(), "value": i}
 				inputObjectsArray.push(optionsObject)
     }
+
   }
   return inputObjectsArray
 }
