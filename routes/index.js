@@ -217,10 +217,10 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 		if(actions.selected_options!=undefined){
 			selectedValue = actions.selected_options[0].value
 		}
-			console.log(`ID: ${ID}\tCOMMAND: ${command} INDEX: ${selectedValue}`)
+			console.log(`ID: ${ID}\ACTION: ${actions} INDEX: ${selectedValue}`)
 
 			//cretes a user in the database
-			if(command == 'submit'){
+			if(action == 'submit'){
 				createUser(ID, null)
 			}
 		} else{
