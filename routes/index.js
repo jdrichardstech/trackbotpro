@@ -206,10 +206,11 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 	res.status(200).end() // best practice to respond with 200 status
 	var actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
 	let token = actionJSONPayload.token
+	let selectedValue = null
 	if(token == process.env.VERIFICATION_TOKEN){
 		let ID=actionJSONPayload.user.id
 		let command = actionJSONPayload.actions[0].name
-		let selectedValue = null
+
 
 		//only fires for select_option inputs
 		if(actionJSONPayload.actions[0].selected_options!=undefined){
