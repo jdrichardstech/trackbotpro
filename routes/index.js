@@ -204,18 +204,18 @@ router.post('/trackbot', function(req, res, next){
 //posts each action and will send to req.body info to sendMessageToSlackResponseURL function
 router.post('/log/actions', urlencodedParser, (req, res) =>{
 	res.status(200).end() // best practice to respond with 200 status
-	var actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
+	let actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
 	let token = actionJSONPayload.token
 	let selectedValue = null
-	let command = null
+	let actions = null
 	if(token == process.env.VERIFICATION_TOKEN){
 		let ID=actionJSONPayload.user.id
-		command = actionJSONPayload.actions[0].name
+		actions = actionJSONPayload.actions[0]
 
 
 		//only fires for select_option inputs
-		if(actionJSONPayload.actions[0].selected_options!=undefined){
-			selectedValue = actionJSONPayload.actions[0].selected_options[0].value
+		if(actions.selected_options!=undefined){
+			selectedValue = actions.selected_options[0].value
 		}
 			console.log(`ID: ${ID}\tCOMMAND: ${command} INDEX: ${selectedValue}`)
 
@@ -228,8 +228,8 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 		}
 
 	//holder to show when a button or input is clicked
-	var message = {
-			"text": actionJSONPayload.user.name + " clicked: "+actionJSONPayload.actions[0].type + " for " + command+ " value: "+selectedValue,
+	let message = {
+			"text": actionJSONPayload.user.name + " clicked: "+actions.type + " for " + actions.name+ " value: "+selectedValue,
 			"replace_original": false
 	}
 	sendMessageToSlackResponseURL(actionJSONPayload.response_url, message)
@@ -254,7 +254,7 @@ function createUser(user_id, result) {
 //sends Post request to the responseURL and console logs each button pushed
 function sendMessageToSlackResponseURL(responseURL, JSONmessage){
 	console.log("Clicked Message: " + JSON.stringify(JSONmessage))
-  var postOptions = {
+  let postOptions = {
       uri: responseURL,
       method: 'POST',
       headers: {
