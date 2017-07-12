@@ -150,12 +150,12 @@ router.post('/trackbot', function(req, res, next){
 									"type": 'select',
 									"value": 'minutes',
 									"style": 'primary',
-									"options": helpers.loopInputNumbers(59)
+									"options": helpers.loopMinutes(59)
 								}
 							]
 						},
 						{
-						 "text":"Would you like to log your exercise now?",
+						 "text":"Submit exercise to your log?",
 						 "mrkdwn": true,
 						 "fallback": "Not done",
 						 "callback_id": "completeExercise",
@@ -184,7 +184,6 @@ router.post('/trackbot', function(req, res, next){
 						}
 					]
 				}
-
 				break;
 			case 'leaderboard':
 				var botPayload = {
