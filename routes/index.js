@@ -220,7 +220,7 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 			console.log(`ID: ${ID}\ACTION: ${actions} INDEX: ${selectedValue}`)
 
 			//cretes a user in the database
-			if(action == 'submit'){
+			if(actions == 'submit'){
 				createUser(ID, null)
 			}
 		} else{
