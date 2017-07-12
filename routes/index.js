@@ -227,9 +227,9 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 			console.log("VERIFICATION_TOKEN ERROR")
 		}
 
-	//holder to show when a button or input is clicked
+	//holder to show when a button or input is clicked. selectedvalue should be different for button shows null value
 	let message = {
-			"text": actionJSONPayload.user.name + " clicked: "+actions.type + " for " + actions.name+ " value: "+selectedValue,
+			"text": actionJSONPayload.user.name + " clicked: "+actions.type + " name: " + actions.name+ " value: "+selectedValue,
 			"replace_original": false
 	}
 	sendMessageToSlackResponseURL(actionJSONPayload.response_url, message)
