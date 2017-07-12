@@ -207,9 +207,10 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 	var actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
 	let token = actionJSONPayload.token
 	let selectedValue = null
+	let command = null
 	if(token == process.env.VERIFICATION_TOKEN){
 		let ID=actionJSONPayload.user.id
-		let command = actionJSONPayload.actions[0].name
+		command = actionJSONPayload.actions[0].name
 
 
 		//only fires for select_option inputs
@@ -228,7 +229,7 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 
 	//holder to show when a button or input is clicked
 	var message = {
-			"text": actionJSONPayload.user.name + " clicked: "+actionJSONPayload.actions[0].name+ " "+actionJSONPayload.actions[0].text+" value: "+selectedValue,
+			"text": actionJSONPayload.user.name + " clicked: "+command+ " value: "+selectedValue,
 			"replace_original": false
 	}
 	sendMessageToSlackResponseURL(actionJSONPayload.response_url, message)
