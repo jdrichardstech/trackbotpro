@@ -229,7 +229,7 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 
 	//holder to show when a button or input is clicked
 	var message = {
-			"text": actionJSONPayload.user.name + " clicked: "+command+ " value: "+selectedValue,
+			"text": actionJSONPayload.user.name + " clicked: "+actionJSONPayload.actions[0].type + " for " + command+ " value: "+selectedValue,
 			"replace_original": false
 	}
 	sendMessageToSlackResponseURL(actionJSONPayload.response_url, message)
