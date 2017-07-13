@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const RunSchema = new Schema({
+	userKey:{type: String, default:''},
 	userID: {type: String, default:''},
 	teamID: {type: String, default:''},
 	channelID: {type: String, default:''},
