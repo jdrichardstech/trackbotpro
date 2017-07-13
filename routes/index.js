@@ -30,10 +30,8 @@ router.get('/auth/redirect', (req, res)=>{
   request(options, (error, response, body) => {
       var JSONresponse = JSON.parse(body)
       if (!JSONresponse.ok){
-          console.log("AUTH/REDIRECT ERROR" +JSON.stringify(JSONresponse))
           res.send("Error encountered: \n"+JSON.stringify(JSONresponse)).status(200).end()
       }else{
-          console.log("REQUEST RESPONSE" +JSON.stringify(JSONresponse))
           res.send("/")
       }
   })
@@ -97,17 +95,17 @@ router.post('/trackbot', function(req, res, next){
 						 "text":"What was your distance?:",
 						 "mrkdwn": true,
 						 "fallback": "You are unable to choose an distance",
-						 "callback_id": "distanceType",
+						 "callback_id": "exerciseDistance",
 						 "color": "#ff3333",
 						 "attachment_type": "default",
 						 "actions":[
 							 {
-								"name": 'distanceType',
+								"name": 'distanceNumber',
 								"text": 'Distance',
 								"type": 'select',
-								"value": 'distanceType',
+								"value": 'distanceNumber',
 								"style": 'primary',
-								"options": helpers.loopDistanceInputNumbers(50)
+								"options": helpers.loopDistanceInputNumbers(45)
 							 },
 							 {
 								"name": 'distanceFormat',
@@ -137,18 +135,18 @@ router.post('/trackbot', function(req, res, next){
 						 "attachment_type": "default",
 						 "actions":[
 							 {
-								"name": 'exerciseHours',
+								"name": 'hour',
 								"text": 'Hours',
 								"type": 'select',
-								"value": 'exerciseHours',
+								"value": 'hour',
 								"style": 'primary',
 								"options": helpers.loopInputNumbers(20)
 								},
 								{
-									"name": 'exerciseMinutes',
+									"name": 'minutes',
 									"text": 'Minutes',
 									"type": 'select',
-									"value": 'exerciseMinutes',
+									"value": 'minutes',
 									"style": 'primary',
 									"options": helpers.loopMinutes(59)
 								}
@@ -204,57 +202,80 @@ router.post('/trackbot', function(req, res, next){
 //posts each action and will send to req.body info to sendMessageToSlackResponseURL function
 router.post('/log/actions', urlencodedParser, (req, res) =>{
 	res.status(200).end() // best practice to respond with 200 status
-	let actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
-	let token = actionJSONPayload.token
-	let selectedValue = null
-	let actions = null
+	let payload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
+	let token = payload.token,
+	selectedValue=null,
+	actions,
+	userID,
+	teamID,
+	channelID,
+	userName,
+	exerciseDate,
+	exerciseType,
+	exerciseDistance,
+	distanceType,
+	exerciseHours,
+	exerciseMinutes,
+	clicked
+
 	if(token == process.env.VERIFICATION_TOKEN){
-		let ID=actionJSONPayload.user.id
-		actions = actionJSONPayload.actions[0]
+		teamID=payload.team.id
+		userID=payload.user.id
+		channelID=payload.channel.id
+		actions = payload.actions[0]
+		clicked = actions.name
 
-
+console.log("payload------TEAM ID:" + teamID + " CHANNEL ID: " + channelID + "----UNIQUEID: " + teamID + userID )
 		//only fires for select_option inputs
 		if(actions.selected_options!=undefined){
 			selectedValue = actions.selected_options[0].value
 		}
-			console.log(`ID: ${ID}\ACTION: ${actions} INDEX: ${selectedValue}`)
 
-			//cretes a user in the database
-			if(actions == 'submit'){
-				createUser(ID, null)
+		//static object for database testing
+		// let runObj = {
+		// 	userID:'K123sk4',
+		// 	teamID:'NKeko3333',
+		// 	exersiseDate: Date.now(),
+		// 	exerciseMinutes: 680,
+		// 	channelID: 'KDK39d9',
+		// 	userName: 'genestd',
+		// 	distanceType: 'miles',
+		// 	exerciseDistance: 12.5,
+		// 	exerciseType: 'run',
+		// 	exerciseHours: 1,
+		// 	timestamp: Date.now()
+		}
+
+			//cretes a new run record in the database
+			if(clicked == 'submit'){
+				console.log('SUMBITTED')
+				// createRun(runObj)
 			}
 		} else{
 			console.log("VERIFICATION_TOKEN ERROR")
 		}
 
-	//holder to show when a button or input is clicked. selectedvalue should be different for button shows null value
-	let message = {
-			"text": actionJSONPayload.user.name + " clicked: "+actions.type + " name: " + actions.name+ " value: "+selectedValue,
+	// test message to send to sendMessageToSlackResponseURL function to show when a button or input is clicked
+		let message = {
+			"text": "{" + userID + "}" + payload.user.name + "--- CALLBACK_ID: " + payload.callback_id + "--- TYPE: "+actions.type + "--- CLICKED(aka name): " + clicked + " ---VALUE: "+selectedValue,
 			"replace_original": false
-	}
-	sendMessageToSlackResponseURL(actionJSONPayload.response_url, message)
+		}
+		console.log(message)
+	//thfunction below can be used for validation of inputs
+	// sendMessageToSlackResponseURL(payload.response_url, message)
 })
 
-//will become a helper function to create the user
-function createUser(user_id, result) {
-  // If user not found, create new user
-  if (result === null) {
-    const newUser = new User({
-      id: user_id
-    });
-    newUser.save();
-    console.log('Added a new slack user todo list document into collection');
-    return newUser;
-  }
-  else {
-    return result;
-  }
+//function that creates a new run object and saves it to mongo database
+function createRun(obj){
+	const newRun = new Run(obj)
+	newRun.save()
+	console.log('Added a new slack user todo list document into collection');
+ 	return newRun;
 }
 
-//sends Post request to the responseURL and console logs each button pushed
+//posts messages back to slack.
 function sendMessageToSlackResponseURL(responseURL, JSONmessage){
-	console.log("Clicked Message: " + JSON.stringify(JSONmessage))
-  let postOptions = {
+  var postOptions = {
       uri: responseURL,
       method: 'POST',
       headers: {
