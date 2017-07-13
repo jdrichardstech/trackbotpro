@@ -3,7 +3,7 @@ const request = require('request')
 const bodyParser = require('body-parser')
 const router = express.Router()
 const urlencodedParser = bodyParser.urlencoded({extended:true})
-const User = require('../models/Run')
+const Run = require('../models/Run')
 const helpers = require('../utils/inputHelpers');
 require('dotenv').config()
 
@@ -97,15 +97,15 @@ router.post('/trackbot', function(req, res, next){
 						 "text":"What was your distance?:",
 						 "mrkdwn": true,
 						 "fallback": "You are unable to choose an distance",
-						 "callback_id": "exerciseDistance",
+						 "callback_id": "distanceType",
 						 "color": "#ff3333",
 						 "attachment_type": "default",
 						 "actions":[
 							 {
-								"name": 'distanceNumber',
+								"name": 'distanceType',
 								"text": 'Distance',
 								"type": 'select',
-								"value": 'distanceNumber',
+								"value": 'distanceType',
 								"style": 'primary',
 								"options": helpers.loopDistanceInputNumbers(50)
 							 },
@@ -137,18 +137,18 @@ router.post('/trackbot', function(req, res, next){
 						 "attachment_type": "default",
 						 "actions":[
 							 {
-								"name": 'hour',
+								"name": 'exerciseHours',
 								"text": 'Hours',
 								"type": 'select',
-								"value": 'hour',
+								"value": 'exerciseHours',
 								"style": 'primary',
 								"options": helpers.loopInputNumbers(20)
 								},
 								{
-									"name": 'minutes',
+									"name": 'exerciseMinutes',
 									"text": 'Minutes',
 									"type": 'select',
-									"value": 'minutes',
+									"value": 'exerciseMinutes',
 									"style": 'primary',
 									"options": helpers.loopMinutes(59)
 								}
