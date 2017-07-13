@@ -227,23 +227,23 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 		if(actions.selected_options!=undefined){
 			selectedValue = actions.selected_options[0].value
 		}
-		let runObj ={
-			userKey:'T645HNGB1U684LB6Q1',
-			userID:'U684LB6Q1',
-			teamID:'T645HNGB1',
-			channelID:'C62L8JPEU',
-			userName:'design',
-			exerciseDate: Date.now(),
-			exerciseType: 'run',
-			exerciseDistance:5,
-			distanceType:'miles',
-			exerciseHours:0,
-			exerciseMinutes:45
-		}
+		// let runObj ={
+		// 	userKey:'T645HNGB1U684LB6Q1',
+		// 	userID:'U684LB6Q1',
+		// 	teamID:'T645HNGB1',
+		// 	channelID:'C62L8JPEU',
+		// 	userName:'design',
+		// 	exerciseDate: Date.now(),
+		// 	exerciseType: 'run',
+		// 	exerciseDistance:5,
+		// 	distanceType:'miles',
+		// 	exerciseHours:0,
+		// 	exerciseMinutes:45
+		// }
 			//cretes a new run record in the database
 			if(clicked == 'submit'){
 				console.log('SUMBITTED: ' + JSON.stringify(runObj))
-				createRun(runObj)
+				// createRun(runObj)
 			}
 		} else{
 			console.log("VERIFICATION_TOKEN ERROR")
