@@ -23,7 +23,6 @@ module.exports = {
 	      	optionsObject = {"text" : ":"+i.toString(), "value": i}
 					inputObjectsArray.push(optionsObject)
 	    }
-
 	  }
 	  return inputObjectsArray
 	},
@@ -31,7 +30,7 @@ module.exports = {
 	//creates array of objects for distance input in attachments
 	loopDistanceInputNumbers: (num) => {
 		let inputObjectsArray = []
-		for(let i=5;i<num+1;i+=5){
+		for(let i=.5;i<num+.5;i+=.5){
 			let optionsObject = {"text" : JSON.stringify(i), "value": i}
 			inputObjectsArray.push(optionsObject)
 		}
