@@ -209,13 +209,6 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 	userID,
 	teamID,
 	channelID,
-	userName,
-	exerciseDate,
-	exerciseType,
-	exerciseDistance,
-	distanceType,
-	exerciseHours,
-	exerciseMinutes,
 	clicked
 
 	if(token == process.env.VERIFICATION_TOKEN){
