@@ -244,7 +244,7 @@ console.log("payload------TEAM ID:" + teamID + " CHANNEL ID: " + channelID + "--
 		// 	exerciseType: 'run',
 		// 	exerciseHours: 1,
 		// 	timestamp: Date.now()
-		}
+		// }
 
 			//cretes a new run record in the database
 			if(clicked == 'submit'){
