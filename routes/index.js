@@ -222,16 +222,28 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 		actions = payload.actions[0]
 		clicked = actions.name
 
-console.log("payload------TEAM ID:" + teamID + " CHANNEL ID: " + channelID + "----UNIQUEID: " + teamID + userID + "---USERID: " + userID  )
+		console.log("payload------TEAM ID:" + teamID + " CHANNEL ID: " + channelID + "----UNIQUEID: " + teamID + userID + "---USERID: " + userID  )
 		//only fires for select_option inputs
 		if(actions.selected_options!=undefined){
 			selectedValue = actions.selected_options[0].value
 		}
-
+		let runObj ={
+			userKey:'T645HNGB1U645HNGDD',
+			userID:'U645HNGDD',
+			teamID:'T645HNGB1',
+			channleID:'C62L8JPEU',
+			userName:'jdrichardstech',
+			exerciseDate: Date.now(),
+			exerciseType: 'run',
+			exerciseDistance:20,
+			distanceType:'miles',
+			exerciseHours:3,
+			exerciseMinutes:15,
+		}
 			//cretes a new run record in the database
 			if(clicked == 'submit'){
-				console.log('SUMBITTED')
-				// createRun(runObj)
+				console.log('SUMBITTED: ' + JSON.stringify(runObj))
+				createRun(runObj)
 			}
 		} else{
 			console.log("VERIFICATION_TOKEN ERROR")
