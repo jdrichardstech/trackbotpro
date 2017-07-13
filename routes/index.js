@@ -51,12 +51,14 @@ router.post('/trackbot', function(req, res, next){
 				"response_type": 'ephemeral',
 				"text": "*"+editedUserName +"\'s Log*\n\n*Date*\t*ExerciseType*\t*Distance*\t*Time*"
 			}
+			sendMessageToSlackResponseURL(responseURL, botPayload)
 			break;
 		case 'help':
 			var botPayload = {
 			"response_type": 'ephemeral',
 			"text": "Hi *" + editedUserName + "*! What would you like to do? \n\nType:\n `/trackbot add` to add a new exercise or \n`/trackbot view` to view your exercises or \n`/trackbot leaderboard` to view who is in the lead this week."
 			}
+			sendMessageToSlackResponseURL(responseURL, botPayload)
 			break;
 		case 'add':
 			var botPayload = {
@@ -182,21 +184,23 @@ router.post('/trackbot', function(req, res, next){
 						}
 					]
 				}
+				sendMessageToSlackResponseURL(responseURL, botPayload)
 				break;
 			case 'leaderboard':
 				var botPayload = {
 				"response_type": 'ephemeral',
 				"text": "Hi *" + editedUserName + "*! Here is the leaderboard"
 				}
+				sendMessageToSlackResponseURL(responseURL, botPayload)
 				break;
 			default:
 				var botPayload = {
 				"response_type": 'ephemeral',
 				"text": "Hi *" + editedUserName + "*! What would you like to do? \n\nType:\n `/trackbot add` to add a new exercise or \n`/trackbot view` to view your exercises or \n`/trackbot leaderboard` to view who is in the lead this week."
 				}
+				sendMessageToSlackResponseURL(responseURL, botPayload)
 				break;
 				}
-	sendMessageToSlackResponseURL(responseURL, botPayload)
 })
 
 //posts each action and will send to req.body info to sendMessageToSlackResponseURL function
@@ -223,21 +227,6 @@ console.log("payload------TEAM ID:" + teamID + " CHANNEL ID: " + channelID + "--
 		if(actions.selected_options!=undefined){
 			selectedValue = actions.selected_options[0].value
 		}
-
-		//static object for database testing
-		// let runObj = {
-		// 	userID:'K123sk4',
-		// 	teamID:'NKeko3333',
-		// 	exersiseDate: Date.now(),
-		// 	exerciseMinutes: 680,
-		// 	channelID: 'KDK39d9',
-		// 	userName: 'genestd',
-		// 	distanceType: 'miles',
-		// 	exerciseDistance: 12.5,
-		// 	exerciseType: 'run',
-		// 	exerciseHours: 1,
-		// 	timestamp: Date.now()
-		// }
 
 			//cretes a new run record in the database
 			if(clicked == 'submit'){
