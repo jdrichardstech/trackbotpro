@@ -231,7 +231,7 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 			userKey:'T645HNGB1U645HNGDD',
 			userID:'U645HNGDD',
 			teamID:'T645HNGB1',
-			channleID:'C62L8JPEU',
+			channelID:'C62L8JPEU',
 			userName:'jdrichardstech',
 			exerciseDate: Date.now(),
 			exerciseType: 'run',
