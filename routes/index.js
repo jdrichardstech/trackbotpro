@@ -228,17 +228,17 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 			selectedValue = actions.selected_options[0].value
 		}
 		let runObj ={
-			userKey:'T645HNGB1U68JLETC3',
-			userID:'U68JLETC3',
+			userKey:'T645HNGB1U684LB6Q1',
+			userID:'U684LB6Q1',
 			teamID:'T645HNGB1',
 			channelID:'C62L8JPEU',
-			userName:'rich12',
+			userName:'design',
 			exerciseDate: Date.now(),
 			exerciseType: 'run',
-			exerciseDistance:10,
+			exerciseDistance:5,
 			distanceType:'miles',
-			exerciseHours:1,
-			exerciseMinutes:30,
+			exerciseHours:0,
+			exerciseMinutes:45
 		}
 			//cretes a new run record in the database
 			if(clicked == 'submit'){
