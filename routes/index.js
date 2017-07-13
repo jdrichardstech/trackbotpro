@@ -222,7 +222,7 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 		actions = payload.actions[0]
 		clicked = actions.name
 
-console.log("payload------TEAM ID:" + teamID + " CHANNEL ID: " + channelID + "----UNIQUEID: " + teamID + userID )
+console.log("payload------TEAM ID:" + teamID + " CHANNEL ID: " + channelID + "----UNIQUEID: " + teamID + userID + "---USERID: " + userID  )
 		//only fires for select_option inputs
 		if(actions.selected_options!=undefined){
 			selectedValue = actions.selected_options[0].value
