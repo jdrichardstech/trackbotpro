@@ -1,6 +1,7 @@
 
 module.exports = {
 	//creates array of objects for inputs in attachments
+	mainObj:{},
 	loopInputNumbers: (num) => {
 	  let inputObjectsArray = []
 	  for(let i=1;i<num+1;i++){
