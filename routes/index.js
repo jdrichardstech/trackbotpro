@@ -144,7 +144,7 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 				for(let k in keys) userObj[k] = keys[k]
 				console.log("SUBMITTED USEROBJECT: " + JSON.stringify(userObj))
 				//ADD EXERCISE OBJECT TO DATABASE
-				// createRun(userObj)
+				createRun(userObj)
 				// //DELETE CURRENT USER OBJECT IN MAIN OBJECT
 				if(helpers.mainObj[userKey]){
 					delete helpers.mainObj[userKey]
