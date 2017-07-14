@@ -14,7 +14,7 @@ module.exports = {
 	 loopMinutes: (num) => {
 	  let inputObjectsArray = []
 
-	  for(let i=1;i<num+1;i++){
+	  for(let i=0;i<num+1;i++){
 	    let optionsObject={}
 	    if(i<10){
 	      optionsObject = {"text" : ":0"+ i.toString(), "value": i}
