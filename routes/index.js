@@ -63,7 +63,8 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 	channelID,
 	clicked,
 	exerciseType,
-	mainObj
+	mainObj,
+	userObj
 
 
 	if(token == process.env.VERIFICATION_TOKEN){
