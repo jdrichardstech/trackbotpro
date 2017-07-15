@@ -44,11 +44,12 @@ router.get('/auth/redirect', (req, res)=>{
 router.post('/trackbot', function(req, res, next){
 	console.log('reqbody: '+ JSON.stringify(req.body))
 	let reqBody = req.body
+	let text = req.body.text
 	let responseURL = reqBody.response_url
 	var userName = req.body.user_name
 	let editedUserName = userName.charAt(0).toUpperCase()+userName.substr(1)
 
-	slash.command(reqBody, editedUserName, responseURL)
+	slash.command(text,reqBody, editedUserName, responseURL)
 })
 
 //posts each action and will send to req.body info to sendMessageToSlackResponseURL function
@@ -88,14 +89,6 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 		}
 
 		switch(clicked){
-			case 'submit':
-				switch(helpers.mainObj[userKey]){
-					case true:
-					console.log("SUBMIT TRUE")
-					break;
-					case false:
-					console.log("SUBMIT FALSE")
-				}
 			case 'distanceNumber':
 				userObj.exerciseDistance = selectedValue
 				break;
@@ -138,28 +131,31 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 		// 	timestamp: Date.now()
 		// }
 
-			// if(clicked == 'submit'){
-			//
-			// 	let keys = {
-			// 		userID,
-			// 		teamID,
-			// 		channelID,
-			// 		userKey,
-			// 		userName
-			// 	}
-			//
-			// 	//ADD THE REST OF THE ID'S TO THE MAIN OBJECT
-			// 	for(let k in keys) userObj[k] = keys[k]
-			// 	console.log("SUBMITTED USEROBJECT: " + JSON.stringify(userObj))
-			// 	//ADD EXERCISE OBJECT TO DATABASE
-			// 	// createRun(userObj)
-			// 	// //DELETE CURRENT USER OBJECT IN MAIN OBJECT
-			// 	if(helpers.mainObj[userKey]){
-			// 		delete helpers.mainObj[userKey]
-			// 	}
-			// 	console.log('USEROBJECT IS DELETED FROM MAINOBJ: ' + JSON.stringify(helpers.mainObj))
-			// 	return
-			// }
+			if(clicked == 'submit'){
+
+
+
+
+				let keys = {
+					userID,
+					teamID,
+					channelID,
+					userKey,
+					userName
+				}
+
+				//ADD THE REST OF THE ID'S TO THE MAIN OBJECT
+				for(let k in keys) userObj[k] = keys[k]
+				console.log("SUBMITTED USEROBJECT: " + JSON.stringify(userObj))
+				//ADD EXERCISE OBJECT TO DATABASE
+				// createRun(userObj)
+				// //DELETE CURRENT USER OBJECT IN MAIN OBJECT
+				if(helpers.mainObj[userKey]){
+					delete helpers.mainObj[userKey]
+				}
+				console.log('USEROBJECT IS DELETED FROM MAINOBJ: ' + JSON.stringify(helpers.mainObj))
+				return
+			}
 		} else {
 			console.log("VERIFICATION_TOKEN ERROR")
 			return
