@@ -5,6 +5,7 @@ const helpers = require('./inputHelpers')
 module.exports = {
 	command: (reqBody, editedUserName, responseURL, sendMessageToSlackResponseURL) => {
 		let botPayload;
+		let str = "This is a string"
 
 		switch(reqBody.text){
 			case 'check':
@@ -136,7 +137,7 @@ module.exports = {
 									 "value": "submit",
 									 "confirm": {
 										 "title": "Are you sure?",
-										 "text": "Think about it.\n\n" + JSON.stringify(helpers.mainObj),
+										 "text": "Think about it.\n\n" + str,
 										 "ok_text": "Yes",
 										 "dismiss_text": "No"
 										}
