@@ -137,7 +137,7 @@ module.exports = {
 									 "value": "submit",
 									 "confirm": {
 										 "title": "Are you sure?",
-										 "text": "Think about it.\n\n" + str,
+										 "text": "Think about it.\n\n" + helpers.mainObj.toString(),
 										 "ok_text": "Yes",
 										 "dismiss_text": "No"
 										}
