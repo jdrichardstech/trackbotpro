@@ -7,7 +7,7 @@ module.exports = {
 		let botPayload;
 		let str = "This is a string"
 
-		switch(x){
+		switch(text){
 			case 'check':
 				console.log("MAIN OBJECT: " + JSON.stringify(helpers.mainObj))
 				break;
