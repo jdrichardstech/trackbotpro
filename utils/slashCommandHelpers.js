@@ -3,7 +3,7 @@ const helpers = require('./inputHelpers')
 
 
 module.exports = {
-	command: (reqBody, editedUserName, responseURL, sendMessageToSlackResponseURL) => {
+	command: (text, reqBody, editedUserName, responseURL, sendMessageToSlackResponseURL) => {
 		let botPayload;
 		let str = "This is a string"
 
