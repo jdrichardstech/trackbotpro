@@ -148,7 +148,7 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 				// //DELETE CURRENT USER OBJECT IN MAIN OBJECT
 
 				if(helpers.mainObj[userKey]){
-					helpers.mainObj[userKey]=helpers.holderObj[userKey]
+					helpers.mainObj=helpers.holderObj
 					console.log("HELPER: " + JSON.stringify(helpers.holderObj[userKey]))
 					delete helpers.mainObj[userKey]
 				}
