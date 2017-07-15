@@ -137,7 +137,7 @@ module.exports = {
 									 "value": "submit",
 									 "confirm": {
 										 "title": "Are you sure?",
-										 "text": "Think about it.\n\n",
+										 "text": "Think about it.",
 										 "ok_text": "Yes",
 										 "dismiss_text": "No"
 										}
