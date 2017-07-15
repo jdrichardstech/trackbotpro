@@ -7,6 +7,9 @@ module.exports = {
 		let botPayload;
 
 		switch(reqBody.text){
+			case 'check':
+				console.log("MAIN OBJECT: " + JSON.stringify(helpers.mainObj))
+				break;
 			case 'view':
 				botPayload = {
 					"response_type": 'ephemeral',
