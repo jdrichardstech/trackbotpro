@@ -84,6 +84,7 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 
 		if(payload.callback_id == 'exerciseType'){
 			userObj.exerciseType = clicked
+			console.log("STRING: " + slash.str)
 			return
 		}
 
@@ -146,9 +147,9 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 				//ADD EXERCISE OBJECT TO DATABASE
 				// createRun(userObj)
 				// //DELETE CURRENT USER OBJECT IN MAIN OBJECT
-				// if(helpers.mainObj[userKey]){
-				// 	delete helpers.mainObj[userKey]
-				// }
+				if(helpers.mainObj[userKey]){
+					delete helpers.mainObj[userKey]
+				}
 				console.log('USEROBJECT IS DELETED FROM MAINOBJ: ' + JSON.stringify(helpers.mainObj))
 				return
 			}
