@@ -158,13 +158,13 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 		}
 
 		//MESSAGE TO SEND BACK TO SLACK INTERFACE
-			// let message = {
-			// 	"text": "{" + userID + "}" + payload.user.name + "--- CALLBACK_ID: " + payload.callback_id + "--- TYPE: "+actions.type + "--- CLICKED(aka name): " + clicked + " ---VALUE: "+selectedValue,
-			// 	"replace_original": false
-			// }
+			let message = {
+				"Type": + JSON.stringify(userObj),
+				"replace_original": false
+			}
 			// console.log('SENDMESSAGE OBJECT: ' + JSON.stringify(message))
 		//FUNCTION SENDS MESSAGE REMBEMBER IMPORT TAG
-		// sendMessageToSlackResponseURL(payload.response_url, message)
+		response.sendMessageToSlackResponseURL(payload.response_url, message)
 })
 
 //CREATE NEW RUN INSTANCE AND SEND TO DATABASE----MOVE TO HELPER FILE
