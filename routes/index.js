@@ -84,7 +84,6 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 
 		if(payload.callback_id == 'exerciseType'){
 			userObj.exerciseType = clicked
-			console.log("HELPER: " + JSON.stringify(helpers.holderObj))
 			return
 		}
 
@@ -147,7 +146,7 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 				//ADD EXERCISE OBJECT TO DATABASE
 				// createRun(userObj)
 				// //DELETE CURRENT USER OBJECT IN MAIN OBJECT
-
+				console.log("HELPER: " + JSON.stringify(helpers.holderObj))
 				if(helpers.mainObj[userKey]){
 					delete helpers.mainObj[userKey]
 				}
