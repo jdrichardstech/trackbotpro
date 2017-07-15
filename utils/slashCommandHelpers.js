@@ -135,7 +135,7 @@ module.exports = {
 									 "type": "button",
 									 "value": "submit",
 									 "confirm": {
-										 "title": "Are you sure?",
+										 "title": "Are you sure?\n" +JSON.stringify(helpers.mainObj[reqBody.team_id+reqBody.user_id]),
 										 "text": "Think about it.",
 										 "ok_text": "Yes",
 										 "dismiss_text": "No"
