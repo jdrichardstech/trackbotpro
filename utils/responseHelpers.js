@@ -153,7 +153,7 @@ let submitRun = (payload) => {
 			console.log("SUBMITTED USEROBJ: " + JSON.stringify(userObj))
 
 			// //ADD EXERCISE OBJECT TO DATABASE
-			// createRun(userObj)
+			createRun(userObj)
 			//
 			// // //DELETE CURRENT USER OBJECT IN MAIN OBJECT
 			if(helpers.mainObj[userKey]){

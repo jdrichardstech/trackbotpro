@@ -93,6 +93,7 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 			case 'submit':
 				let message={}
 				//SUBMITRUN FUNCTION IS LOCATED IN UTILS/RESPONSEHELPERS.JS LINE 21
+				//UNCOMMENT LINE 156 IN UTILS/RESPONSEHELPERS TO SEND RUN TO DATABASE
 				response.submitRun(payload)
 				break;
 			case 'distanceNumber':
