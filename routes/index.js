@@ -44,12 +44,11 @@ router.get('/auth/redirect', (req, res)=>{
 router.post('/trackbot', function(req, res, next){
 	console.log('reqbody: '+ JSON.stringify(req.body))
 	let reqBody = req.body
-	let text = req.body.text
 	let responseURL = reqBody.response_url
 	var userName = req.body.user_name
 	let editedUserName = userName.charAt(0).toUpperCase()+userName.substr(1)
-
-	slash.command(text,reqBody, editedUserName, responseURL)
+	console.log("TRACKBOT RESPONSEURL: " + JSON.stringify(responseURL))
+	slash.command(reqBody, editedUserName, responseURL)
 })
 
 //posts each action and will send to req.body info to sendMessageToSlackResponseURL function
@@ -65,7 +64,8 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 	clicked,
 	exerciseType,
 	mainObj,
-	userObj
+	userObj,
+	editedUserName
 
 
 	if(token == process.env.VERIFICATION_TOKEN){
@@ -77,6 +77,7 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 		userObj = helpers.mainObj[(teamID+userID)]
 		userKey = teamID + userID
 		userName = payload.user.name
+		editedUserName = userName.charAt(0).toUpperCase()+userName.substr(1)
 
 		//only fires for select_option inputs
 		if(actions.selected_options!=undefined){
@@ -89,6 +90,11 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 		}
 
 		switch(clicked){
+			case 'submit':
+				let message={}
+				//SUBMITRUN FUNCTION IS LOCATED IN UTILS/RESPONSEHELPERS.JS LINE 21
+				response.submitRun(payload)
+				break;
 			case 'distanceNumber':
 				userObj.exerciseDistance = selectedValue
 				break;
@@ -111,11 +117,6 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 			default:
 				break;
 		}
-
-
-		// CHECK FOR IDS
-		// console.log("payload------TEAM ID:" + teamID + " CHANNEL ID: " + channelID + "----UNIQUEID: " + teamID + userID )
-
 		//STATIC OBJECT FOR ENTERING STATIC DB RECORDS
 		// let runObj = {
 		// 	userID:'K123sk4',
@@ -131,52 +132,10 @@ router.post('/log/actions', urlencodedParser, (req, res) =>{
 		// 	timestamp: Date.now()
 		// }
 
-			if(clicked == 'submit'){
-
-
-
-
-				let keys = {
-					userID,
-					teamID,
-					channelID,
-					userKey,
-					userName
-				}
-
-				//ADD THE REST OF THE ID'S TO THE MAIN OBJECT
-				for(let k in keys) userObj[k] = keys[k]
-				console.log("SUBMITTED USEROBJECT: " + JSON.stringify(userObj))
-				//ADD EXERCISE OBJECT TO DATABASE
-				// createRun(userObj)
-				// //DELETE CURRENT USER OBJECT IN MAIN OBJECT
-				if(helpers.mainObj[userKey]){
-					delete helpers.mainObj[userKey]
-				}
-				console.log('USEROBJECT IS DELETED FROM MAINOBJ: ' + JSON.stringify(helpers.mainObj))
-				return
-			}
-		} else {
-			console.log("VERIFICATION_TOKEN ERROR")
-			return
-		}
-
-		//MESSAGE TO SEND BACK TO SLACK INTERFACE
-			// let message = {
-			// 	"text": "{" + userID + "}" + payload.user.name + "--- CALLBACK_ID: " + payload.callback_id + "--- TYPE: "+actions.type + "--- CLICKED(aka name): " + clicked + " ---VALUE: "+selectedValue,
-			// 	"replace_original": false
-			// }
-			// console.log('SENDMESSAGE OBJECT: ' + JSON.stringify(message))
-		//FUNCTION SENDS MESSAGE REMBEMBER IMPORT TAG
-		// sendMessageToSlackResponseURL(payload.response_url, message)
+	} else {
+		console.log("VERIFICATION_TOKEN ERROR")
+		return
+	}
 })
-
-//CREATE NEW RUN INSTANCE AND SEND TO DATABASE----MOVE TO HELPER FILE
-function createRun(obj){
-	const newRun = new Run(obj)
-	newRun.save()
-	console.log('Added a new exercise record into collection');
- 	return newRun;
-}
 
 module.exports = router

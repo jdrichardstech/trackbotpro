@@ -3,14 +3,10 @@ const helpers = require('./inputHelpers')
 
 
 module.exports = {
-	command: (text, reqBody, editedUserName, responseURL, sendMessageToSlackResponseURL) => {
+	command: (reqBody, editedUserName, responseURL) => {
 		let botPayload;
-		let str = "This is a string"
 
-		switch(text){
-			case 'check':
-				console.log("MAIN OBJECT: " + JSON.stringify(helpers.mainObj))
-				break;
+		switch(reqBody.text){
 			case 'view':
 				botPayload = {
 					"response_type": 'ephemeral',
@@ -101,7 +97,7 @@ module.exports = {
 							 "mrkdwn": true,
 							 "fallback": "You are unable to choose an time",
 							 "callback_id": "exerciseTime",
-							 "color": "#00cc44",
+							 "color": "#ffff00",
 							 "attachment_type": "default",
 							 "actions":[
 								 {
@@ -134,13 +130,7 @@ module.exports = {
 									 "name": "submit",
 									 "text": "Submit",
 									 "type": "button",
-									 "value": "submit",
-									 "confirm": {
-										 "title": "Are you sure?",
-										 "text": "Think about it.\n\nYour Exercise:",
-										 "ok_text": "Yes",
-										 "dismiss_text": "No"
-										}
+									 "value": "submit"
 								 },
 								 {
 									 "name": "cancel",
