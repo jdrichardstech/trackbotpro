@@ -8,6 +8,7 @@ module.exports = {
 
 		switch(reqBody.text){
 			case 'view':
+			  console.log(reqBody)
 				botPayload = {
 					"response_type": 'ephemeral',
 					"text": "*"+editedUserName +"\'s Log*\n\n*Date*\t*ExerciseType*\t*Distance*\t*Time*"
