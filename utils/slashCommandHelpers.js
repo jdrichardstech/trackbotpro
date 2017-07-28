@@ -16,6 +16,9 @@ module.exports = {
 				query.push(
 					{ $sort: {exerciseDate: -1} }
 				)
+				query.push(
+					{ $project: {exerciseDate: 1, exerciseType: 1, exerciseDistance: 1, exerciseHours: 1, exerciseMinutes: 1}}
+				)
 				return Run
 					.aggregate(query)
 					.then( result=>{
