@@ -17,15 +17,19 @@ module.exports = {
 					{ $sort: {exerciseDate: -1} }
 				)
 				query.push(
-					{ $project: {exerciseDate: 1, exerciseType: 1, exerciseDistance: 1, exerciseHours: 1, exerciseMinutes: 1}}
+					{ $project: {userName: 1, exerciseDate: 1, exerciseType: 1, exerciseDistance: 1, distanceType: 1, exerciseHours: 1, exerciseMinutes: 1}}
 				)
 				return Run
 					.aggregate(query)
 					.then( result=>{
 						console.log('result: ', result)
+						const text = "*Date*\t*Type*\t*Distance*\t*Time*\n"
+						result.map( item=>{
+							return text += item.exerciseDate + "\t" + item.exerciseDistance + item.distanceUnits + "\t" + item.exerciseHours + ":" + item.exerciseMinutes + "\n"
+						})
 						botPayload = {
 							"response_type": 'ephemeral',
-							"text": "*Check heroku log for result*"
+							"text": text
 						}
 						response.sendMessageToSlackResponseURL(responseURL, botPayload)
 					})
