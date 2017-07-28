@@ -1,7 +1,6 @@
 const response = require('./responseHelpers')
 const helpers = require('./inputHelpers')
-
-
+const Run = require('../models/Run')
 module.exports = {
 	command: (reqBody, editedUserName, responseURL) => {
 		let botPayload;
@@ -9,11 +8,29 @@ module.exports = {
 		switch(reqBody.text){
 			case 'view':
 			  console.log(reqBody)
-				botPayload = {
-					"response_type": 'ephemeral',
-					"text": "*"+editedUserName +"\'s Log*\n\n*Date*\t*ExerciseType*\t*Distance*\t*Time*"
-				}
-				response.sendMessageToSlackResponseURL(responseURL, botPayload)
+				var key = reqBody.team_id + reqBody.user_id
+				var query = [
+					// filter the results by our userId
+					{ $match: { userKey: userId } }
+				]
+				query.push(
+					{ $group: {
+						_id: null,
+						// get a count of every result that matches until now
+						count: { $sum: 1 }
+						}
+					}
+				)
+				return Run
+					.aggregate(query)
+					.then( result=>{
+						console.log('result: ', result)
+						botPayload = {
+							"response_type": 'ephemeral',
+							"text": "*Check heroku log for result*"
+						}
+						response.sendMessageToSlackResponseURL(responseURL, botPayload)
+					})
 				break;
 			case 'help':
 				botPayload = {
