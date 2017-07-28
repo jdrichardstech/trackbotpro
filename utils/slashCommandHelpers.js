@@ -44,9 +44,8 @@ module.exports = {
 					.aggregate(query)
 					.then( result=>{
 						console.log('result: ', result)
-						var text = "`Type Distance Time  Date`\n"
+						var text = "`Type Distance Time  Date`\n`---- -------- ----  ----`\n"
 						result.map( item=>{
-							console.log(typeof item.exerciseType)
 							text += "`" + item.exerciseType.padEnd(4) +  " " + item.exerciseDistance +  " "
 							text += (item.distanceType==="miles" ? item.distanceType : "km   ") +  " " + item.exerciseHours + ":" + item.exerciseMinutes + " " + item.exerciseDate + "`\n"
 						})
