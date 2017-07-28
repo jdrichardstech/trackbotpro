@@ -47,7 +47,7 @@ module.exports = {
 							text += "`" + item.exerciseType.padEnd(4) +  " "
 							var distance = item.exerciseDistance +  " " + (item.distanceType==="miles" ? item.distanceType : "km   ")
 							text += distance.padEnd(8)
-							text +=  " " + item.exerciseHours + ":" + item.exerciseMinutes + " " + item.exerciseDate.getUTCDate() + "/" + item.exerciseDate.getUTCMonth() + "/" + item.exerciseDate.getUTCFullYear() + "`\n"
+							text +=  " " + item.exerciseHours + ":" + item.exerciseMinutes + " " + item.exerciseDate.getUTCMonth() + "/" +item.exerciseDate.getUTCDate() + "/" + item.exerciseDate.getUTCFullYear() + "`\n"
 						})
 						botPayload = {
 							"response_type": 'ephemeral',
