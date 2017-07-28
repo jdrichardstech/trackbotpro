@@ -15,7 +15,7 @@ module.exports = {
 				]
 				query.push(
 					{ $group: {
-						_id: 'exerciseType',
+						_id: '$exerciseType',
 						// get a count of every result that matches until now
 						count: { $sum: 1 }
 						}
