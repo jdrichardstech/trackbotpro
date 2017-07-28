@@ -23,7 +23,7 @@ module.exports = {
 		        }
 		    };
 		}  //end polyfill
-		
+
 		let botPayload;
 
 		switch(reqBody.text){
@@ -47,7 +47,8 @@ module.exports = {
 						var text = "`Type Distance Time  Date`\n"
 						result.map( item=>{
 							console.log(typeof item.exerciseType)
-							return text += "`" + item.exerciseType.padEnd(4) +  " " + item.exerciseDistance +  " " + item.distanceType +  " " + item.exerciseHours + ":" + item.exerciseMinutes + " " + item.exerciseDate + "`\n"
+							text += "`" + item.exerciseType.padEnd(4) +  " " + item.exerciseDistance +  " "
+							text += (item.distanceType==="miles" ? item.distanceType : "km   ") +  " " + item.exerciseHours + ":" + item.exerciseMinutes + " " + item.exerciseDate + "`\n"
 						})
 						botPayload = {
 							"response_type": 'ephemeral',
