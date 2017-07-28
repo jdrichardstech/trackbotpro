@@ -23,9 +23,9 @@ module.exports = {
 					.aggregate(query)
 					.then( result=>{
 						console.log('result: ', result)
-						var text = "*Date*\t*Type*\t*Distance*\t*Time*\n"
+						var text = "`*Date*\t*Type*\t*Distance*\t*Time*\n"
 						result.map( item=>{
-							return text += item.exerciseDate + "\t" + item.exerciseDistance + item.distanceUnits + "\t" + item.exerciseHours + ":" + item.exerciseMinutes + "\n"
+							return text += item.exerciseDate + "\t" + item.exerciseType + "\t" + item.exerciseDistance + item.distanceUnits + "\t" + item.exerciseHours + ":" + item.exerciseMinutes + "`"
 						})
 						botPayload = {
 							"response_type": 'ephemeral',
