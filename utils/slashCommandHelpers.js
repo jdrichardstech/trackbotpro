@@ -48,7 +48,7 @@ module.exports = {
 						result.map( item=>{
 							text += "`" + item.exerciseType.padEnd(4) +  " "
 							var distance = item.exerciseDistance +  " " + (item.distanceType==="miles" ? item.distanceType : "km   ")
-							distance.padEnd(8)
+							text += distance.padEnd(8)
 							text +=  " " + item.exerciseHours + ":" + item.exerciseMinutes + " " + item.exerciseDate + "`\n"
 						})
 						botPayload = {
