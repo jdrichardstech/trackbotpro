@@ -25,7 +25,7 @@ module.exports = {
 						console.log('result: ', result)
 						var text = "`Type Distance Time  Date`\n"
 						result.map( item=>{
-							return text += "`" + item.exerciseType +  " " + item.exerciseDistance +  " " + item.distanceUnits +  " " + item.exerciseHours + ":" + item.exerciseMinutes + " " + item.exerciseDate + "`\n"
+							return text += "`" + item.exerciseType.padEnd(4, ' ') +  " " + item.exerciseDistance +  " " + item.distanceType +  " " + item.exerciseHours + ":" + item.exerciseMinutes + " " + item.exerciseDate + "`\n"
 						})
 						botPayload = {
 							"response_type": 'ephemeral',
