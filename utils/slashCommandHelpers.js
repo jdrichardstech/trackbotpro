@@ -28,7 +28,6 @@ module.exports = {
 
 		switch(reqBody.text){
 			case 'view':
-			  console.log(reqBody)
 				var key = reqBody.team_id + reqBody.user_id
 				var query = [
 					// filter the results by our userId
@@ -43,13 +42,12 @@ module.exports = {
 				return Run
 					.aggregate(query)
 					.then( result=>{
-						console.log('result: ', result)
 						var text = "`Type Distance Time  Date`\n`---- -------- ----  ----`\n"
 						result.map( item=>{
 							text += "`" + item.exerciseType.padEnd(4) +  " "
 							var distance = item.exerciseDistance +  " " + (item.distanceType==="miles" ? item.distanceType : "km   ")
 							text += distance.padEnd(8)
-							text +=  " " + item.exerciseHours + ":" + item.exerciseMinutes + " " + item.exerciseDate + "`\n"
+							text +=  " " + item.exerciseHours + ":" + item.exerciseMinutes + " " + item.exerciseDate.getUTCDate() + "/" + item.exerciseDate.getUTCMonth() + "/" + item.exerciseDate.getUTCFullYear() + "`\n"
 						})
 						botPayload = {
 							"response_type": 'ephemeral',
