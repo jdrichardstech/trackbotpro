@@ -11,7 +11,7 @@ module.exports = {
 				var key = reqBody.team_id + reqBody.user_id
 				var query = [
 					// filter the results by our userId
-					{ $match: { userKey: userId } }
+					{ $match: { userKey: key } }
 				]
 				query.push(
 					{ $group: {
