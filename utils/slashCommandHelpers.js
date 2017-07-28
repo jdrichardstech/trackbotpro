@@ -14,12 +14,7 @@ module.exports = {
 					{ $match: { userKey: key } }
 				]
 				query.push(
-					{ $group: {
-						_id: '$exerciseType',
-						// get a count of every result that matches until now
-						count: { $sum: 1 }
-						}
-					}
+					{ $sort: {exerciseDate: -1} }
 				)
 				return Run
 					.aggregate(query)
@@ -163,12 +158,31 @@ module.exports = {
 					response.sendMessageToSlackResponseURL(responseURL, botPayload)
 					break;
 				case 'leaderboard':
+					console.log(reqBody)
+					var key = reqBody.team_id + reqBody.user_id
+					var query = [
+						// filter the results by our userId
+						{ $match: { userKey: key } }
+					]
+					query.push(
+						//group by exercise type
+						{ $group: {
+							_id: '$exerciseType',
+							count: { $sum: 1 }
+							}
+						}
+					)
+					return Run
+						.aggregate(query)
+						.then( result=>{
+							console.log('result: ', result)
+							botPayload = {
+								"response_type": 'ephemeral',
+								"text": "*Check heroku log for result*"
+							}
+							response.sendMessageToSlackResponseURL(responseURL, botPayload)
+						})
 
-					botPayload = {
-					"response_type": 'ephemeral',
-					"text": "Hi *" + editedUserName + "*! Here is the leaderboard"
-					}
-					response.sendMessageToSlackResponseURL(responseURL, botPayload)
 					break;
 				default:
 					botPayload = {
